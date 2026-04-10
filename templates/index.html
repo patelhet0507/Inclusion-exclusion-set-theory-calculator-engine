@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Inclusion-Exclusion Pro</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+<div class="dashboard">
+    <div class="info-panel">
+        <h1>Set Theory<br>Engine.</h1>
+        <p>Inclusion-Exclusion Principle<br>Live Presentation Calculator</p>
+    </div>
+
+    <div class="calc-panel">
+        <form method="POST">
+            <div class="operation-selection">
+                <label><input type="radio" name="operation" value="union3" checked> Union of 3 sets</label>
+                <label><input type="radio" name="operation" value="union2"> Union of 2 sets</label>
+                <label><input type="radio" name="operation" value="intersection"> Intersection A ∩ B</label>
+                <label><input type="radio" name="operation" value="difference"> Difference A - B</label>
+            </div>
+            <div class="input-grid">
+                <div class="input-group" id="inputGroupA">
+                    <label>Set |A|</label>
+                    <input type="number" name="A" id="inputA" placeholder="0">
+                </div>
+                <div class="input-group" id="inputGroupB">
+                    <label>Set |B|</label>
+                    <input type="number" name="B" id="inputB" placeholder="0">
+                </div>
+                <div class="input-group" id="inputGroupC">
+                    <label>Set |C|</label>
+                    <input type="number" name="C" id="inputC" placeholder="0">
+                </div>
+
+                <div class="input-group" id="inputGroupAB">
+                    <label>Intersection |A ∩ B|</label>
+                    <input type="number" name="AB" id="inputAB" placeholder="0">
+                </div>
+                <div class="input-group" id="inputGroupAC">
+                    <label>Intersection |A ∩ C|</label>
+                    <input type="number" name="AC" id="inputAC" placeholder="0">
+                </div>
+                <div class="input-group" id="inputGroupBC">
+                    <label>Intersection |B ∩ C|</label>
+                    <input type="number" name="BC" id="inputBC" placeholder="0">
+                </div>
+                <div class="input-group" id="inputGroupABC">
+                    <label>All |A ∩ B ∩ C|</label>
+                    <input type="number" name="ABC" id="inputABC" placeholder="0">
+                </div>
+            </div>
+
+            <button type="submit">Calculate</button>
+        </form>
+
+        <div class="result-box" id="resultBox" style="display:none;">
+            <span id="resultText"></span>
+            <h2></h2>
+        </div>
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const radios = document.querySelectorAll('input[name="operation"]');
+    const inputGroupB = document.getElementById('inputGroupB');
+    const inputGroupC = document.getElementById('inputGroupC');
+    const inputGroupAB = document.getElementById('inputGroupAB');
+    const inputGroupAC = document.getElementById('inputGroupAC');
+    const inputGroupBC = document.getElementById('inputGroupBC');
+    const inputGroupABC = document.getElementById('inputGroupABC');
+
+    function updateVisibility() {
+        const operation = document.querySelector('input[name="operation"]:checked').value;
+        if (operation === 'union3') {
+            inputGroupB.style.display = 'block';
+            inputGroupC.style.display = 'block';
+            inputGroupAB.style.display = 'block';
+            inputGroupAC.style.display = 'block';
+            inputGroupBC.style.display = 'block';
+            inputGroupABC.style.display = 'block';
+        } else if (operation === 'union2') {
+            inputGroupB.style.display = 'block';
+            inputGroupC.style.display = 'none';
+            inputGroupAB.style.display = 'block';
+            inputGroupAC.style.display = 'none';
+            inputGroupBC.style.display = 'none';
+            inputGroupABC.style.display = 'none';
+        } else if (operation === 'intersection') {
+            inputGroupB.style.display = 'block';
+            inputGroupC.style.display = 'none';
+            inputGroupAB.style.display = 'block';
+            inputGroupAC.style.display = 'none';
+            inputGroupBC.style.display = 'none';
+            inputGroupABC.style.display = 'none';
+        } else if (operation === 'difference') {
+            inputGroupB.style.display = 'none';
+            inputGroupC.style.display = 'none';
+            inputGroupAB.style.display = 'block';
+            inputGroupAC.style.display = 'none';
+            inputGroupBC.style.display = 'none';
+            inputGroupABC.style.display = 'none';
+        }
+    }
+
+    radios.forEach(radio => radio.addEventListener('change', updateVisibility));
+    updateVisibility(); // initial
+
+    // AJAX
+    const form = document.querySelector('form');
+    const resultBox = document.getElementById('resultBox');
+    const resultText = document.getElementById('resultText');
+    const resultH2 = document.querySelector('.result-box h2');
+
+    form.addEventListener('submit', function(e) {
+        e.preventDefault();
+        const formData = new FormData(form);
+        fetch('/calculate', {
+            method: 'POST',
+            body: formData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.error) {
+                resultText.textContent = data.error;
+                resultH2.textContent = '';
+                resultBox.style.display = 'block';
+            } else {
+                const operation = formData.get('operation');
+                let text = '';
+                if (operation === 'union3') text = 'The Union |A ∪ B ∪ C| is';
+                else if (operation === 'union2') text = 'The Union |A ∪ B| is';
+                else if (operation === 'intersection') text = 'The Intersection |A ∩ B| is';
+                else if (operation === 'difference') text = 'The Difference |A - B| is';
+                resultText.textContent = text;
+                resultH2.textContent = data.result;
+                resultBox.style.display = 'block';
+            }
+        })
+        .catch(error => {
+            resultText.textContent = 'An error occurred.';
+            resultH2.textContent = '';
+            resultBox.style.display = 'block';
+        });
+    });
+});
+</script>
+
+</body>
+</html>

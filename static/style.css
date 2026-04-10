@@ -1,0 +1,178 @@
+:root {
+    --accent: #00d2ff;
+    --glass: rgba(255, 255, 255, 0.12);
+    --border: rgba(255, 255, 255, 0.2);
+}
+
+body {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    font-family: 'Inter', 'Segoe UI', sans-serif;
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    overflow: hidden;
+}
+
+/* Main Layout Wrapper */
+.dashboard {
+    display: flex;
+    width: 90%;
+    max-width: 1100px;
+    height: 750px;
+    background: var(--glass);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 30px;
+    border: 1px solid var(--border);
+    box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+    overflow: hidden;
+}
+
+/* Left Side: Presentation Title */
+.info-panel {
+    flex: 1;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.info-panel h1 {
+    font-size: 3.5rem;
+    margin: 0;
+    line-height: 1.1;
+    background: linear-gradient(to right, #fff, var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.info-panel p {
+    font-size: 1.1rem;
+    opacity: 0.8;
+    margin-top: 20px;
+    border-left: 3px solid var(--accent);
+    padding-left: 15px;
+}
+
+/* Right Side: Calculator */
+.calc-panel {
+    flex: 1;
+    padding: 40px;
+    background: rgba(255, 255, 255, 0.03);
+    overflow-y: auto;
+}
+
+.operation-selection {
+    margin-bottom: 20px;
+}
+
+.operation-selection label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 0.9rem;
+    cursor: pointer;
+}
+
+.input-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 15px;
+}
+
+.input-group {
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    font-size: 0.8rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
+    color: var(--accent);
+    font-weight: bold;
+}
+
+.input-group input {
+    width: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid var(--border);
+    padding: 12px;
+    border-radius: 12px;
+    color: white;
+    font-size: 1.1rem;
+    text-align: center;
+    transition: 0.3s;
+    box-sizing: border-box;
+}
+
+.input-group input:focus {
+    border-color: var(--accent);
+    background: rgba(0, 0, 0, 0.5);
+    outline: none;
+    box-shadow: 0 0 15px rgba(0, 210, 255, 0.3);
+}
+
+button {
+    width: 100%;
+    padding: 18px;
+    margin-top: 20px;
+    background: linear-gradient(135deg, #00d2ff 0%, #3a7bd5 100%);
+    border: none;
+    border-radius: 15px;
+    color: white;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.4s;
+    text-transform: uppercase;
+}
+
+button:hover {
+    filter: brightness(1.2);
+    transform: translateY(-3px);
+    box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4);
+}
+
+.result-box {
+    margin-top: 25px;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    text-align: center;
+    border: 1px solid var(--accent);
+    animation: fadeIn 0.5s ease-in;
+}
+
+.result-box h2 {
+    margin: 0;
+    color: var(--accent);
+    font-size: 1.8rem;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+@media (max-width: 768px) {
+    .dashboard {
+        flex-direction: column;
+        height: auto;
+        width: 95%;
+        max-width: none;
+    }
+    .info-panel, .calc-panel {
+        padding: 20px;
+    }
+    .info-panel h1 {
+        font-size: 2.5rem;
+    }
+    .calc-panel {
+        overflow-y: visible;
+    }
+}
