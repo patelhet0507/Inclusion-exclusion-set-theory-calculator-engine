@@ -32,7 +32,9 @@ def index():
 
             elif operation == "intersection":
 
-                result = AB
+                result = A + B - AB
+                if result < 0:
+                    error = "Invalid input: intersection cannot be negative"
 
             elif operation == "difference":
 
@@ -70,7 +72,9 @@ def calculate():
             if result < 0:
                 return jsonify({"error": "Invalid input: union cannot be negative"})
         elif operation == "intersection":
-            result = AB
+            result = A + B - AB
+            if result < 0:
+                return jsonify({"error": "Invalid input: intersection cannot be negative"})
         elif operation == "difference":
             result = A - AB
             if result < 0:

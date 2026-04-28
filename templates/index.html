@@ -18,7 +18,7 @@
             <div class="operation-selection">
                 <label><input type="radio" name="operation" value="union3" checked> Union of 3 sets</label>
                 <label><input type="radio" name="operation" value="union2"> Union of 2 sets</label>
-                <label><input type="radio" name="operation" value="intersection"> Intersection A ∩ B</label>
+                <label><input type="radio" name="operation" value="intersection"> Intersection A ∩ B (use |A ∪ B| input)</label>
                 <label><input type="radio" name="operation" value="difference"> Difference A - B</label>
             </div>
             <div class="input-grid">
@@ -75,6 +75,9 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function updateVisibility() {
         const operation = document.querySelector('input[name="operation"]:checked').value;
+        const ABlabel = inputGroupAB.querySelector('label');
+        const ABinput = inputGroupAB.querySelector('input');
+
         if (operation === 'union3') {
             inputGroupB.style.display = 'block';
             inputGroupC.style.display = 'block';
@@ -82,6 +85,8 @@ document.addEventListener('DOMContentLoaded', function() {
             inputGroupAC.style.display = 'block';
             inputGroupBC.style.display = 'block';
             inputGroupABC.style.display = 'block';
+            ABlabel.textContent = 'Intersection |A ∩ B|';
+            ABinput.placeholder = '0';
         } else if (operation === 'union2') {
             inputGroupB.style.display = 'block';
             inputGroupC.style.display = 'none';
@@ -89,6 +94,8 @@ document.addEventListener('DOMContentLoaded', function() {
             inputGroupAC.style.display = 'none';
             inputGroupBC.style.display = 'none';
             inputGroupABC.style.display = 'none';
+            ABlabel.textContent = 'Intersection |A ∩ B|';
+            ABinput.placeholder = '0';
         } else if (operation === 'intersection') {
             inputGroupB.style.display = 'block';
             inputGroupC.style.display = 'none';
@@ -96,6 +103,8 @@ document.addEventListener('DOMContentLoaded', function() {
             inputGroupAC.style.display = 'none';
             inputGroupBC.style.display = 'none';
             inputGroupABC.style.display = 'none';
+            ABlabel.textContent = 'Union |A ∪ B|';
+            ABinput.placeholder = 'Enter |A ∪ B|';
         } else if (operation === 'difference') {
             inputGroupB.style.display = 'none';
             inputGroupC.style.display = 'none';
@@ -103,6 +112,8 @@ document.addEventListener('DOMContentLoaded', function() {
             inputGroupAC.style.display = 'none';
             inputGroupBC.style.display = 'none';
             inputGroupABC.style.display = 'none';
+            ABlabel.textContent = 'Intersection |A ∩ B|';
+            ABinput.placeholder = '0';
         }
     }
 
@@ -133,7 +144,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 let text = '';
                 if (operation === 'union3') text = 'The Union |A ∪ B ∪ C| is';
                 else if (operation === 'union2') text = 'The Union |A ∪ B| is';
-                else if (operation === 'intersection') text = 'The Intersection |A ∩ B| is';
+                else if (operation === 'intersection') text = 'The Intersection |A ∩ B| is (computed from |A ∪ B|)';
                 else if (operation === 'difference') text = 'The Difference |A - B| is';
                 resultText.textContent = text;
                 resultH2.textContent = data.result;
