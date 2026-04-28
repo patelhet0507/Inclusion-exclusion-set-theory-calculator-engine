@@ -21,6 +21,14 @@
                 <label><input type="radio" name="operation" value="intersection"> Intersection A ∩ B (use |A ∪ B| input)</label>
                 <label><input type="radio" name="operation" value="difference"> Difference A - B</label>
             </div>
+            <div class="help-panel">
+                <h3>Formula help</h3>
+                <p class="help-line"><strong>Union of 2:</strong> |A ∪ B| = |A| + |B| - |A ∩ B|</p>
+                <p class="help-line"><strong>Union of 3:</strong> |A ∪ B ∪ C| = |A| + |B| + |C| - |A ∩ B| - |A ∩ C| - |B ∩ C| + |A ∩ B ∩ C|</p>
+                <p class="help-line"><strong>Intersection:</strong> |A ∩ B| = |A| + |B| - |A ∪ B|</p>
+                <p class="help-line"><strong>Difference:</strong> |A - B| = |A| - |A ∩ B|</p>
+                <p class="example-text">Example: If |A|=20, |B|=15 and |A ∪ B|=25, then |A ∩ B| = 20 + 15 - 25 = 10</p>
+            </div>
             <div class="input-grid">
                 <div class="input-group" id="inputGroupA">
                     <label>Set |A|</label>
@@ -59,6 +67,7 @@
         <div class="result-box" id="resultBox" style="display:none;">
             <span id="resultText"></span>
             <h2></h2>
+            <p class="result-detail" id="resultDetail"></p>
         </div>
     </div>
 </div>
@@ -125,6 +134,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const resultBox = document.getElementById('resultBox');
     const resultText = document.getElementById('resultText');
     const resultH2 = document.querySelector('.result-box h2');
+    const resultDetail = document.getElementById('resultDetail');
 
     form.addEventListener('submit', function(e) {
         e.preventDefault();
@@ -138,6 +148,7 @@ document.addEventListener('DOMContentLoaded', function() {
             if (data.error) {
                 resultText.textContent = data.error;
                 resultH2.textContent = '';
+                resultDetail.textContent = '';
                 resultBox.style.display = 'block';
             } else {
                 const operation = formData.get('operation');
@@ -148,6 +159,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 else if (operation === 'difference') text = 'The Difference |A - B| is';
                 resultText.textContent = text;
                 resultH2.textContent = data.result;
+                resultDetail.innerHTML = `<strong>Formula:</strong> ${data.formula}<br><strong>Steps:</strong> ${data.breakdown}`;
                 resultBox.style.display = 'block';
             }
         })

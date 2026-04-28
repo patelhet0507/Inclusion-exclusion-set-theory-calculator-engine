@@ -138,6 +138,45 @@ button:hover {
     box-shadow: 0 10px 20px rgba(0, 210, 255, 0.4);
 }
 
+.help-panel {
+    margin-bottom: 20px;
+    padding: 18px;
+    border: 1px solid rgba(255, 255, 255, 0.14);
+    border-radius: 18px;
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.help-panel h3 {
+    margin: 0 0 10px;
+    font-size: 0.9rem;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: #e3f7ff;
+    opacity: 0.9;
+}
+
+.help-line {
+    margin: 6px 0;
+    font-size: 0.95rem;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
+.example-text {
+    margin-top: 10px;
+    font-size: 0.95rem;
+    color: #dffcff;
+    opacity: 0.95;
+}
+
+.result-detail {
+    margin-top: 12px;
+    font-size: 0.95rem;
+    color: #e9f9ff;
+    line-height: 1.5;
+    opacity: 0.95;
+}
+
 .result-box {
     margin-top: 25px;
     padding: 20px;
